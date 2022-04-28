@@ -1,18 +1,11 @@
-import Header from "./components/Header/Header";
-import Form from "./components/Form/Form";
-import Button from "./components/Button/Button";
+import MainPage from "./components/MainPage/MainPage";
+import CategoriesList from "./components/CategoriesList/CategoriesList";
 
 function App() {
   return (
     <>
-      <Header title={"The main title prom props"} />
-      <p className="">
-        Lorem ipsum dolor, sit amet consectetur adipisicing elit. Delectus,
-        aspernatur.
-      </p>
-      <Form labelName={"Select date"} />
-      <Button value={"Plus"} />
-      <Button value={"Minus"} />
+      {/* <MainPage /> */}
+      <CategoriesList />
     </>
   );
 }

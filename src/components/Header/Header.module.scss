@@ -1,0 +1,13 @@
+@import "../../assets/styles/mixins.scss";
+
+.header {
+  @include container;
+
+  background-color: rgb(234, 91, 14);
+  padding: 10px;
+}
+
+.title {
+  margin-left: 20px;
+  font-size: 20px;
+}
