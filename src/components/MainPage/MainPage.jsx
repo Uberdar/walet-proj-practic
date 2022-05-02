@@ -1,15 +1,15 @@
-import Header from "../Header/Header";
-import TransactionForm from "../TransactionForm/TransactionForm";
-import ButtonsCollection from "../ButtonsCollection/ButtonsCollection";
+import HeaderWithGoBack from "../shared/HeaderWithGoBack/HeaderWithGoBack";
+import TransactionForm from "../TransactionForm/TrasactionForm";
+import ButtonsToAnalitics from "../ButtonsToAnalitics/ButtonsToAnalitics";
 
 const MainPage = () => {
-  return (
-    <>
-      <Header title={"Журнал видатків"} />
-      <TransactionForm />
-      <ButtonsCollection />
-    </>
-  );
-};
+    return (
+        <>
+            <HeaderWithGoBack title="Журнал расходов" />
+            <TransactionForm />
+            <ButtonsToAnalitics />
+        </>
+    )
+}
 
 export default MainPage;
