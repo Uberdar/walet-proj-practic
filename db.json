@@ -1,0 +1,36 @@
+{
+  "incomes": [
+    {
+      "date": "2022-05-09",
+      "time": "14:50",
+      "category": "різне",
+      "sum": "11",
+      "currency": "UAH",
+      "comment": "ddd",
+      "transType": "incomes",
+      "id": 1
+    }
+  ],
+  "costs": [
+    {
+      "date": "2022-05-09",
+      "time": "14:17",
+      "category": "різне",
+      "sum": "100",
+      "currency": "UAH",
+      "comment": "pizza",
+      "transType": "costs",
+      "id": 2
+    },
+    {
+      "date": "2022-05-09",
+      "time": "14:50",
+      "category": "різне",
+      "sum": "99",
+      "currency": "UAH",
+      "comment": "dsd",
+      "transType": "costs",
+      "id": 3
+    }
+  ]
+}

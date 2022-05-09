@@ -1,12 +1,12 @@
-import sprite from "../../../images/sprite.svg";
-import s from "./ButtonWithIcon.module.css";
+import sprite from "../../../assets/images/sprite.svg";
+import s from "./ButtonWithIcon.module.scss";
 
-const ButtonWithIcon = ({ icon, type = "button", className, cbOnClick }) => {
+const ButtonWithIcon = ({ icon, className, type = "button", cbOnClick }) => {
   return (
     <button
       onClick={cbOnClick}
-      type="button"
-      className={className ? className : s.button}
+      type={type}
+      className={className ? className : s.btn}
     >
       <svg className={s.svg}>
         <use href={sprite + icon} />

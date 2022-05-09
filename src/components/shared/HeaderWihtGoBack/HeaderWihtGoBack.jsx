@@ -1,7 +1,7 @@
-import s from "./HeaderWithGoBack.module.css";
 import ButtonWithIcon from "../ButtonWithIcon/ButtonWithIcon";
+import s from "./HeaderWihtGoBack.module.scss";
 
-const HeaderWithGoBack = ({ title, withBtn, onGoBack }) => {
+const HeaderWihtGoBack = ({ title, withBtn, onGoBack }) => {
   return (
     <header className={s.header}>
       {withBtn && (
@@ -12,4 +12,4 @@ const HeaderWithGoBack = ({ title, withBtn, onGoBack }) => {
   );
 };
 
-export default HeaderWithGoBack;
+export default HeaderWihtGoBack;

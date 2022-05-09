@@ -1,21 +1,21 @@
-import s from "./ButtonsToAnalitics.module.css";
+import s from "./ButtonsToAnalitics.module.scss";
 
 const ButtonsToAnalitics = ({ toggleMain }) => {
   return (
     <div className={s.container}>
       <button
         onClick={() => toggleMain("costs")}
-        type="button"
         className={s.btn}
+        type="button"
       >
-        Все расходы
+        Всі витрати
       </button>
       <button
         onClick={() => toggleMain("incomes")}
-        type="button"
         className={s.btn}
+        type="button"
       >
-        Все доходы
+        Всі доходи
       </button>
     </div>
   );
