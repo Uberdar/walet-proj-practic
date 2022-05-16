@@ -1,30 +1,46 @@
 import HeaderWihtGoBack from "../shared/HeaderWihtGoBack/HeaderWihtGoBack";
 import s from "./CategoriesList.module.scss";
 import sprite from "../../assets/images/sprite.svg";
+import ButtonWithIcon from "../shared/ButtonWithIcon/ButtonWithIcon";
+import { useContext, useState } from "react";
+import { CategoryContext } from "../../context/CategoriesProvider";
+import { useNavigate, useParams } from "react-router-dom";
 
-const categories = [
-  {
-    id: 1,
-    title: "Different 1",
-  },
-  {
-    id: 2,
-    title: "Different 2",
-  },
-  {
-    id: 3,
-    title: "Different 3",
-  },
-];
+const CategoriesList = ({ setCategory }) => {
+  const [newCategory, setNewCategory] = useState("");
+  const { incomesCats, costsCats, addCategory } = useContext(CategoryContext);
+  const { transType } = useParams();
+  const navigate = useNavigate();
 
-const CategoriesList = ({ onGoBack, setCategory }) => {
+  const handleChange = (e) => {
+    setNewCategory(e.target.value);
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    addCategory({ transType, category: { title: newCategory } });
+  };
+
+  const categories =
+    transType === "costs"
+      ? costsCats
+      : transType === "incomes"
+      ? incomesCats
+      : [];
+
   return (
     <>
-      <HeaderWihtGoBack title="Категорії" withBtn onGoBack={onGoBack} />
+      <HeaderWihtGoBack title="Категорії" withBtn onGoBack={null} />
       <ul className={s.list}>
         {categories.map(({ id, title }) => (
           <li className={s.item} key={id}>
-            <span className={s.title} onClick={() => setCategory(title)}>
+            <span
+              className={s.title}
+              onClick={() => {
+                setCategory(title);
+                navigate(-1);
+              }}
+            >
               {title}
             </span>
             <button className={s.btn} type="button">
@@ -37,6 +53,15 @@ const CategoriesList = ({ onGoBack, setCategory }) => {
           </li>
         ))}
       </ul>
+      <form className={s.form} onSubmit={handleSubmit}>
+        <input
+          type="text"
+          name="newCategory"
+          value={newCategory}
+          onChange={handleChange}
+        />
+        <ButtonWithIcon icon="#icon-plus" type="submit" />
+      </form>
     </>
   );
 };
