@@ -6,7 +6,8 @@ export function getTransactionsApi(transType) {
   return axios.get(transType).then(({ data }) => data);
 }
 
-export function addTransactionApi(transType, transaction) {
+export function addTransactionApi(transaction) {
+  const { transType } = transaction;
   return axios.post(transType, transaction).then(({ data }) => data);
 }
 
@@ -20,4 +21,7 @@ export function addCategoryApi({ transType, category }) {
 
 export function getCategoriesApi({ transType }) {
   return axios.get(transType + "Cats").then(({ data }) => data);
+}
+export function removeCategoriesApi({ transType, id }) {
+  return axios.delete(transType + "Cats" + "/" + id);
 }

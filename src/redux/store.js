@@ -1,9 +1,11 @@
-import { combineReducers, createStore } from "redux";
-import { composeWithDevTools } from "@redux-devtools/extension";
+import { configureStore } from "@reduxjs/toolkit";
+import categories from "./categories/categoriesSlice";
 import { transactionsReducer } from "./transactions/transactionsReducer";
-
-const rootReducer = combineReducers({
-  transactions: transactionsReducer,
+import { isLoadingReducer as isLoading } from "./loader/isLoadingReducer";
+export const store = configureStore({
+  reducer: {
+    transactions: transactionsReducer,
+    categories,
+    isLoading,
+  },
 });
-
-export const store = createStore(rootReducer, composeWithDevTools());

@@ -1,32 +1,26 @@
-import { combineReducers } from "redux";
+import { combineReducers, createReducer } from "@reduxjs/toolkit";
+import {
+  addCostsSuccess,
+  addIncomesSuccess,
+  deleteCostsSuccess,
+  deleteIncomesSuccess,
+  getCostsSuccess,
+  getIncomesSuccess,
+} from "./transactionsActions";
 
-const costsReducer = (state = [], { type, payload }) => {
-  switch (type) {
-    case "transactions/getCosts":
-      return payload;
-    case "transactions/addCosts":
-      return [...state, payload];
-    case "transactions/removeCosts":
-      return state.filter((transaction) => transaction.id !== payload);
+const costsReducer = createReducer([], {
+  [getCostsSuccess]: (_, { payload }) => payload,
+  [addCostsSuccess]: (state, { payload }) => [...state, payload],
+  [deleteCostsSuccess]: (state, { payload }) =>
+    state.filter((el) => el.id !== payload),
+});
 
-    default:
-      return state;
-  }
-};
-
-const incomesReducer = (state = [], { type, payload }) => {
-  switch (type) {
-    case "transactions/getIncomes":
-      return payload;
-    case "transactions/addIncomes":
-      return [...state, payload];
-    case "transactions/removeIncomes":
-      return state.filter((transaction) => transaction.id !== payload);
-
-    default:
-      return state;
-  }
-};
+const incomesReducer = createReducer([], {
+  [getIncomesSuccess]: (_, { payload }) => payload,
+  [addIncomesSuccess]: (state, { payload }) => [...state, payload],
+  [deleteIncomesSuccess]: (state, { payload }) =>
+    state.filter((el) => el.id !== payload),
+});
 
 export const transactionsReducer = combineReducers({
   costs: costsReducer,

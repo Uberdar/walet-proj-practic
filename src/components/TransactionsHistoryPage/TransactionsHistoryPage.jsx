@@ -1,7 +1,6 @@
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
-import { useLoaderContext } from "../../context/LoaderProvider";
 import { removeTransactionApi } from "../../utils/apiService";
 import HeaderWihtGoBack from "../shared/HeaderWihtGoBack/HeaderWihtGoBack";
 import TransactionsHistoryItem from "../TransactionsHistoryItem/TransactionsHistoryItem";
@@ -10,10 +9,10 @@ import {
   removeCosts,
   removeIncomes,
 } from "../../redux/transactions/transactionsActions";
+import { deleteTransaction } from "../../redux/transactions/transactionsOperations";
 
 const TransactionsHistoryPage = () => {
   const dispatch = useDispatch();
-  const setIsLoading = useLoaderContext();
 
   const transactions = useSelector((state) => state.transactions);
   const [contextId, setContextId] = useState(null);
@@ -26,16 +25,8 @@ const TransactionsHistoryPage = () => {
 
   const onGoBack = () => navigate("/");
 
-  const deleteTransaction = (transType, id) => {
-    setIsLoading(true);
-    removeTransactionApi({ transType, id })
-      .then(() => {
-        transType === "costs" && dispatch(removeCosts(id));
-
-        transType === "incomes" && dispatch(removeIncomes(id));
-      })
-      .catch((err) => console.log(err))
-      .finally(() => setIsLoading(false));
+  const handleDeleteTransaction = (transType, id) => {
+    dispatch(deleteTransaction({ transType, id }));
   };
 
   return (
@@ -49,7 +40,7 @@ const TransactionsHistoryPage = () => {
         {transactions[transType].map((transaction) => (
           <TransactionsHistoryItem
             transType={transType}
-            deleteTransaction={deleteTransaction}
+            deleteTransaction={handleDeleteTransaction}
             contextId={contextId}
             changeContextId={changeContextId}
             key={transaction.id}

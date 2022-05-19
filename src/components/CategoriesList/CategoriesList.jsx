@@ -2,37 +2,60 @@ import HeaderWihtGoBack from "../shared/HeaderWihtGoBack/HeaderWihtGoBack";
 import s from "./CategoriesList.module.scss";
 import sprite from "../../assets/images/sprite.svg";
 import ButtonWithIcon from "../shared/ButtonWithIcon/ButtonWithIcon";
-import { useContext, useState } from "react";
-import { CategoryContext } from "../../context/CategoriesProvider";
+import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { addCategoryApi } from "../../utils/apiService";
+import {
+  addCostsCats,
+  addIncomesCats,
+} from "../../redux/categories/categoriesSlice";
+import {
+  addCostsCategory,
+  addIncomesCategory,
+} from "../../redux/categories/categoriesOperatios";
 
 const CategoriesList = ({ setCategory }) => {
-  const [newCategory, setNewCategory] = useState("");
-  const { incomesCats, costsCats, addCategory } = useContext(CategoryContext);
-  const { transType } = useParams();
+  const dispatch = useDispatch();
   const navigate = useNavigate();
+  const categories = useSelector((state) => state.categories);
+  const [newCategory, setNewCategory] = useState("");
+  const { transType } = useParams();
 
   const handleChange = (e) => {
     setNewCategory(e.target.value);
   };
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    addCategory({ transType, category: { title: newCategory } });
+  const addCategory = ({ transType, category }) => {
+    addCategoryApi({ transType, category }).then((category) => {
+      transType === "incomes" && dispatch(addIncomesCats(category));
+      transType === "costs" && dispatch(addCostsCats(category));
+    });
   };
 
-  const categories =
-    transType === "costs"
-      ? costsCats
-      : transType === "incomes"
-      ? incomesCats
-      : [];
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    const args = {
+      transType,
+      category: { title: newCategory },
+    };
+    transType === "costs" && dispatch(addCostsCategory(args));
+    transType === "incomes" && dispatch(addIncomesCategory(args));
+  };
+
+  const goBack = () => {
+    navigate(-1);
+  };
+
+  useEffect(() => {
+    newCategory && setNewCategory("");
+  }, [categories]);
 
   return (
     <>
-      <HeaderWihtGoBack title="Категорії" withBtn onGoBack={null} />
+      <HeaderWihtGoBack title="Категорії" withBtn onGoBack={goBack} />
       <ul className={s.list}>
-        {categories.map(({ id, title }) => (
+        {categories[transType + "Cats"].map(({ id, title }) => (
           <li className={s.item} key={id}>
             <span
               className={s.title}
