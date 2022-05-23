@@ -1,9 +1,9 @@
 import { useEffect } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { Route, Routes } from "react-router-dom";
 import MainPage from "./components/MainPage/MainPage";
 import TransactionsHistoryPage from "./components/TransactionsHistoryPage/TransactionsHistoryPage";
-import { getCategoriesApi } from "./utils/apiService";
+import { getCategoriesApi, registerUserApi } from "./utils/apiService";
 
 import {
   getCostsCats,
@@ -14,9 +14,12 @@ import {
   getCostsCategories,
   getIncomesCategories,
 } from "./redux/categories/categoriesOperatios";
+import { getIsAuth } from "./redux/auth/authSelectors";
+import RegisterPage from "./pages/RegisterPage";
 
 const App = () => {
   const dispatch = useDispatch();
+  const isAuth = useSelector(getIsAuth);
 
   useEffect(() => {
     dispatch(getTransactions("costs"));
@@ -42,13 +45,24 @@ const App = () => {
   }, []);
 
   return (
-    <Routes>
-      <Route path="/*" element={<MainPage />} />
-      <Route
-        path="/transactions/:transType"
-        element={<TransactionsHistoryPage />}
-      />
-    </Routes>
+    <>
+      <Routes>
+        {isAuth ? (
+          <>
+            <Route path="/*" element={<MainPage />} />
+            <Route
+              path="/transactions/:transType"
+              element={<TransactionsHistoryPage />}
+            />
+          </>
+        ) : (
+          <>
+            <Route path="/login" element={<h1>Login Page</h1>} />
+            <Route path="/register" element={<RegisterPage />} />
+          </>
+        )}
+      </Routes>
+    </>
   );
 };
 
